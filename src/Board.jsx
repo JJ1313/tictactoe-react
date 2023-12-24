@@ -2,12 +2,22 @@ import { useState } from 'react'
 import { Square } from './Square.jsx'
 export function Board() {
   const [squares, setSquares] = useState(Array(9).fill(null));
+  const [xIsNext, setXIsNext] = useState(true);
 
-  const [xIsNext, setXIsNext] = useState(true)
+  const winner = calculateWinner(squares);
+
+  let status = '';
+
+  if (winner) {
+    status = `Winner: ${winner}`
+  }
+  else {
+    status = `Next player: ${xIsNext ? 'x' : 'o'}`
+  }
 
   function handleClick(index) {
     const nextSquares = squares.slice();
-    if (squares[index]) {
+    if (squares[index] || calculateWinner(squares)) {
       return
     }
     if (xIsNext) {
@@ -16,11 +26,31 @@ export function Board() {
     else {
       nextSquares[index] = 'o';
     }
-    setXIsNext(!xIsNext);
     setSquares(nextSquares);
+    setXIsNext(!xIsNext);
+  }
+
+  function calculateWinner(squares) {
+    const lines = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6]
+    ];
+    for (let i = 0; i < lines.length; i++) {
+      const [a, b, c] = lines[i];
+      if (squares[a] && squares[a] === squares[b] && squares[b] === squares[c]) {
+        return squares[a]
+      }
+    }
   }
 
   return <>
+    <div className='status shadow border-r10'>{status}</div>
     <div className="board">
       <Square value={squares[0]} onSquareClick={() => handleClick(0)} />
       <Square value={squares[1]} onSquareClick={() => handleClick(1)} />

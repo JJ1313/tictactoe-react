@@ -5,6 +5,7 @@
   --clr-danger: #cd2c58;
   --clr-success: #49e44e;
   --clr-black: #505050;
+  --clr-gray: #606060;
   --clr-white: #ffffff;
   font-size: 16px;
 }
@@ -22,19 +23,26 @@ body {
   place-content: center;
 }
 
+.shadow {
+  box-shadow: 0 5px 5px 2px #333;
+}
+
+.border-r10 {
+  border-radius: 10px;
+}
+
 .board {
+  margin-top: 2rem;
   display: grid;
   grid-template-columns: repeat(3, 70px);
   gap: 10px;
 
   & .square {
     background: var(--clr-primary);
-    background: #606060;
+    background: var(--clr-gray);
     width: 100%;
     aspect-ratio: 1;
     border: none;
-    border-radius: 10px;
-    box-shadow: 0 5px 5px 2px #333;
     cursor: pointer;
     color: var(--clr-white);
     font-size: 2rem;
@@ -84,4 +92,11 @@ body {
       border-radius: 50%;
     }
   }
+}
+
+.status {
+  margin-top: 1rem;
+  height: 50px;
+  /* outline: 1px solid red; */
+  background: var(--clr-gray)
 }
